@@ -202,11 +202,11 @@ class PartnerManagementApp:
         entry_contact_name = ttk.Entry(add_partner_window)
         entry_contact_name.grid(row=3, column=1, pady=5)
 
-        ttk.Label(add_partner_window, text="Contact Email:").grid(row=4, column=0, pady=5)
+        ttk.Label(add_partner_window, text="Contact Email (Optional):").grid(row=4, column=0, pady=5)
         entry_contact_email = ttk.Entry(add_partner_window)
         entry_contact_email.grid(row=4, column=1, pady=5)
 
-        ttk.Label(add_partner_window, text="Contact Phone:").grid(row=5, column=0, pady=5)
+        ttk.Label(add_partner_window, text="Contact Phone (Optional):").grid(row=5, column=0, pady=5)
         entry_contact_phone = ttk.Entry(add_partner_window)
         entry_contact_phone.grid(row=5, column=1, pady=5)
 
@@ -300,7 +300,7 @@ class PartnerManagementApp:
         entry_contact_email = ttk.Entry(edit_partner_window)
         entry_contact_email.grid(row=5, column=1, pady=5)
 
-        ttk.Label(edit_partner_window, text="Contact Phone:").grid(row=6, column=0, pady=5)
+        ttk.Label(edit_partner_window, text="Contact Phone (0000000000 formatting):").grid(row=6, column=0, pady=5)
         entry_contact_phone = ttk.Entry(edit_partner_window)
         entry_contact_phone.grid(row=6, column=1, pady=5)
         ttk.Button(edit_partner_window, text="Back", command=lambda: [edit_partner_window.destroy()]).grid(row = 8, column = 1, pady = 5)
@@ -348,7 +348,14 @@ class PartnerManagementApp:
             if not all([entry_name.get(), entry_type.get(), entry_resources.get(), entry_contact_name.get()]):
                 messagebox.showerror("Error", "Required fields cannot be empty.")
                 return
-            # Assuming 'self.update_partner_data' is your method to update partner details in the database
+            # Validate email format
+            if entry_contact_email.get() and not self.is_valid_email(entry_contact_email.get()):
+                messagebox.showerror("Error", "Invalid email format.")
+                return
+            # Validate phone format
+            if entry_contact_phone.get() and not self.is_valid_phone(entry_contact_phone.get()):
+                messagebox.showerror("Error", "Invalid phone number format.")
+                return
             self.update_partner_data(entry_name.get(), entry_type.get(), entry_resources.get(), entry_contact_name.get(), entry_contact_email.get(), entry_contact_phone.get())
             messagebox.showinfo("Success", "Partner details updated successfully.")
             edit_partner_window.destroy()
@@ -484,7 +491,6 @@ class PartnerManagementApp:
 
 
     def get_partners_list_for_view(self):
-        # Example implementation (adjust based on your actual database schema)
         conn = sqlite3.connect('partners.db')
         cursor = conn.cursor()
         cursor.execute("SELECT Name, Type, Resources, Contact_Name, Contact_Email, Contact_Phone FROM partners")
