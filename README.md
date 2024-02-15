@@ -63,8 +63,21 @@ python3 main.py
 
 
 
+# Project Description
 
+## Introduction
+This program uses a SQLite3 database to effectively store business and community partners. This is a unique approach to solving FBLA's problem description
 
+## Features
+### User Friendly UI
+The program is easy to understand for the easier, and does not require the user to analyze it deeply
+### Data Management
+The program allows the user to effectively search through their database, and filter out unwanted categories
+
+## How it solves the problem description
+This program solves the problem description by allowing the user to login and add partners into the list. If need be, they are able to edit or delete the partners. They are also able to search through the list of partners, and apply a filter to find a certain category of partners that the user wants to find.
+## Conclusion
+This program is a unique and thoughtful approach to FBLA's prompt. It was created with user friendliness in mind, that being said, the chances of this code breaking is extremely minimal. 
 
 
 
